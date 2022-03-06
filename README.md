@@ -27,8 +27,8 @@ The NFT can atmost be transferred 2 times, after that it is non-transferable. We
 
 Plan Contract
 ```bash
-  https://mumbai.polygonscan.com/address/0xa7b0f7000524bedb5066897563166acf989bf5a6#code
-  address = 0xa7B0F7000524beDB5066897563166AcF989bF5A6
+  https://mumbai.polygonscan.com/address/0xa3C412D31C07b933c5554b55541e97bb5d89CD22#code
+  address = 0xa3C412D31C07b933c5554b55541e97bb5d89CD22
 ```
 
 Ticket Contract
