@@ -1,5 +1,4 @@
 import React from 'react'
-import Register, {Resgister} from './Register'
 export const Home = () => {
   
 
@@ -13,7 +12,9 @@ export const Home = () => {
          connect  Wallet 
        </button> */}
        
-       <Register/>
+       <div>
+
+       </div>
 
        </>
     

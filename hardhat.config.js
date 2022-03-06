@@ -9,30 +9,14 @@ const POLYSCAN_API_KEY =
   process.env.POLYSCAN_API_KEY || "Your polyscan API key";
 
 module.exports = {
-  defaultNetwork: "hardhat",
-  networks: {
-    hardhat: {
-      chainId: 1337,
-    },
-    mumbai: {
-      url: MUMBAI_RPC_URL,
-      accounts: [PRIVATE_KEY],
-    },
-    rinkeby: {
-      url: RINKEBY_RPC_URL,
-      accounts: [PRIVATE_KEY],
-    },
+  solidity:"0.8.10",
+  paths:{
+    artifacts:'./src/artifacts'
   },
-  etherscan: {
-    apiKey: POLYSCAN_API_KEY,
-  },
-  solidity: {
-    version: "0.8.10",
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200,
-      },
-    },
-  },
-};
+  networks:{
+    hardhat:{
+      chainId:1337
+    }
+  }
+
+}

@@ -37,8 +37,8 @@
       ]
     },
     "/home/enoch/gitWorkspace/coupon/frontend/contracts/Ticket.sol": {
-      "lastModificationDate": 1646479852980,
-      "contentHash": "5722371f9097aed621b0d8e195e65490",
+      "lastModificationDate": 1646547856946,
+      "contentHash": "7f4c0f2f7e592bf0f769ed4ea1f2582c",
       "sourceName": "contracts/Ticket.sol",
       "solcConfig": {
         "version": "0.8.10",
@@ -550,8 +550,8 @@
       ]
     },
     "/home/enoch/gitWorkspace/coupon/frontend/contracts/Plan.sol": {
-      "lastModificationDate": 1646479852980,
-      "contentHash": "f8e0ddd5a6fbf733625c9724877ee8cc",
+      "lastModificationDate": 1646547856946,
+      "contentHash": "759fefb6ad28eb2541b5e3165e927c34",
       "sourceName": "contracts/Plan.sol",
       "solcConfig": {
         "version": "0.8.10",

@@ -1,9 +1,43 @@
 import React from "react";
-
+import { ethers } from "ethers";
 import Navbar from "./Navbar.js";
-import Footer from "./Footer.js.js";
-
+import Footer from "./Footer.js";
+import Ticket from "./../artifacts/contracts/Ticket.sol/Ticket.json"
 export default function Register() {
+    const contract_address_ticket="0x5FbDB2315678afecb367f032d93F642f64180aa3";
+    const ticket_abi=[
+        "event registerEvent(address _addresss, uint indexed _tId);",
+        " function register() public",
+    ];
+
+    async function reqAcct(){
+        await window.ethereum.request({method:'eth_requestAccounts'});
+      }
+    
+      async function RegisterAddress(){
+            
+
+      
+     if (typeof window.ethereum !== 'undefined'){
+        await reqAcct()
+     const provider = new ethers.providers.Web3Provider(window.ethereum)
+     const signer = provider.getSigner()
+     const contract= new ethers.Contract(contract_address_ticket,ticket_abi,signer);
+     const data=await contract.register();
+     await data.wait()
+     }
+
+    
+   
+
+   
+        
+        ///check if wallet is connected
+        //connect to smart contract 
+        //calls register function
+        //once user is registerd stop user from registering again
+
+    }
   return (
     <>
       <Navbar transparent />
@@ -113,7 +147,7 @@ export default function Register() {
                   <i className="fas fa-user-friends text-xl"></i>
                 </div>
                 <h3 className="text-3xl mb-2 font-semibold leading-normal">
-                  Working with us is a pleasure
+                  Try Out Our free  Nft
                 </h3>
                 <p className="text-lg font-light leading-relaxed mt-4 mb-4 text-gray-700">
                   Don't let your uses guess by attaching tooltips and popoves
@@ -126,12 +160,9 @@ export default function Register() {
                   you're good to go. Just make sure you enable them first via
                   JavaScript.
                 </p>
-                <a
-                  href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/presentation"
-                  className="font-bold text-gray-800 mt-8"
-                >
-                  Check Tailwind Starter Kit!
-                </a>
+                <button onClick={RegisterAddress} className="font-bold bg-red-500 px-10 py-4 rounded mt-5 text-gray-800 mt-8">
+                    Register 
+                </button>
               </div>
 
               <div className="w-full md:w-4/12 px-4 mr-auto ml-auto">

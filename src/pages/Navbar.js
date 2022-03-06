@@ -1,6 +1,7 @@
 import React from "react";
 import {ConnectWallet} from '../components/ConnectWallet'
 import { ethers } from 'ethers'
+import Web3Modal from "web3modal";
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,15 +9,24 @@ import {
   Link
 } from "react-router-dom";
 
-
 export default function Navbar(props) {
-  const contractAddress=""
+
+
+  async function reqAcct(){
+    await window.ethereum.request({method:'eth_requestAccounts'});
+  }
+   
   async function connect(){
+    if (typeof window.ethereum !== "undefined"){
+     await reqAcct()
+    
+   //const provider = new ethers.providers.JsonRpcProvider();
     const provider = new ethers.providers.Web3Provider(window.ethereum)
-    await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner()
     console.log(signer)
+    }
   }
+  //connect()
 
   const [navbarOpen, setNavbarOpen] = React.useState(false);
   return (
@@ -68,7 +78,7 @@ export default function Navbar(props) {
                     : "text-gray-800 hover:text-gray-600") +
                   " px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
                 }
-                href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/landing"
+                href="/"
               >
                 <i
                   className={
@@ -78,7 +88,7 @@ export default function Navbar(props) {
                     " far fa-file-alt text-lg leading-lg mr-2"
                   }
                 />{" "}
-                Register
+                Home
               </a>
             </li>
             <li className="flex items-center">
@@ -120,7 +130,7 @@ export default function Navbar(props) {
                     " far fa-file-alt text-lg leading-lg mr-2"
                   }
                 />{" "}
-                My Plans
+                Plans
               </a>
             </li>
           </ul>
