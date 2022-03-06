@@ -13,11 +13,7 @@ export default function Register() {
     async function reqAcct(){
         await window.ethereum.request({method:'eth_requestAccounts'});
       }
-    
       async function RegisterAddress(){
-            
-
-      
      if (typeof window.ethereum !== 'undefined'){
         await reqAcct()
      const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -26,16 +22,6 @@ export default function Register() {
      const data=await contract.register();
      await data.wait()
      }
-
-    
-   
-
-   
-        
-        ///check if wallet is connected
-        //connect to smart contract 
-        //calls register function
-        //once user is registerd stop user from registering again
 
     }
   return (
