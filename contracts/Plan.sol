@@ -22,7 +22,7 @@ contract Plan{
     uint planStart;
     uint planDuration;
     uint planEnd;
-    bool planStarted;
+    bool planValidity;
     uint planSubscribers;
   }
 
@@ -32,7 +32,7 @@ contract Plan{
   // planStart -> After how many days from now you want this plan to activate for users to buy
   // planEnd -> After how many days after planStart you want this plan to deactivate disabling users to buy
   // planDuration -> Duration of the plan
-  // planStarted -> did the plan start??
+  // planValidity -> is the plan live/dead??
 
   // Mapping of tokenId with planDetails struct
   mapping(uint256 => planDetails) public plans;
@@ -41,6 +41,12 @@ contract Plan{
   mapping(address => bool) public planControllers;
 
   address public ticketContractAddr;
+
+  // Events
+  event createPlanEvent(uint indexed _planId, string _planName, uint _planCost, uint _planDuration);
+  event deletePlanEvent(uint indexed _planId);
+  event editPlanEvent(uint indexed _planId, string _planName, uint _planCost, uint _planStart, uint _planDuration, uint _planEnd);
+  event buyPlanEvent(uint indexed _planId, uint indexed _tId);
 
   constructor () {
     Owner = msg.sender;
@@ -77,7 +83,8 @@ contract Plan{
     newPlan.planCost = _planCost;
     newPlan.planStart = block.timestamp;
     newPlan.planDuration = _planDuration * 1 days;
-    newPlan.planStarted = true;
+    newPlan.planValidity = true;
+    emit createPlanEvent(newTokenId, _planName, _planCost, _planDuration);
     _tokenIds.increment();
   }
 
@@ -94,27 +101,29 @@ contract Plan{
     newPlan.planStart = block.timestamp + _planStart * 1 days;
     newPlan.planDuration = _planDuration * 1 days;
     newPlan.planEnd = newPlan.planStart + _planEnd * 1 days;
-    newPlan.planStarted = true;
+    newPlan.planValidity = true;
+    emit createPlanEvent(newTokenId, _planName, _planCost, _planDuration);
     _tokenIds.increment();
   }
 
   function deletePlan(uint _planId) public onlyPlanController {
     planDetails storage Plan = plans[_planId];
-    require(Plan.planStarted == true, "Cannot delete a deleted Plan");
-    Plan.planStarted = false;
+    require(Plan.planValidity == true, "Cannot delete a deleted Plan");
+    Plan.planValidity = false;
   }
 
   // only SpecialPlans can be editted
   function editPlan(uint _planId, string calldata _planName, uint _planCost, uint _planStart, uint _planDuration, uint _planEnd) public onlyPlanController {
     planDetails storage Plan = plans[_planId];
     require(block.timestamp < Plan.planStart, "Plan cannot be edited because plan has already started");
-    require(Plan.planStarted == true, "Cannot Edit a Deleted Plan");
+    require(Plan.planValidity == true, "Cannot Edit a Deleted Plan");
     require(_planEnd !=0, "_planEnd cannot be 0");
     Plan.planName = _planName;
     Plan.planCost = _planCost;
     Plan.planDuration = _planDuration * 1 days;
     Plan.planStart = block.timestamp + _planStart * 1 days;
     Plan.planEnd = Plan.planStart + _planEnd * 1 days;
+    emit editPlanEvent(_planId, _planName, _planCost, _planStart, _planDuration, _planEnd);
   }
 
   function getPlanDetails(uint _planId) public view returns (planDetails memory) {
@@ -134,6 +143,7 @@ contract Plan{
     uint _subscriptionStart = block.timestamp;
     uint _subscriptionEnd = _subscriptionStart + Plan.planDuration;
     InterfaceTicket(ticketContractAddr).updateTicketDetails(_tId, _planName, _planId, _subscriptionCost, _subscriptionStart, _subscriptionEnd);
+    emit buyPlanEvent(_planId, _tId);
   }
 
 }
