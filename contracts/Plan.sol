@@ -26,8 +26,8 @@ contract Plan{
     uint planSubscribers;
   }
 
-  // currency input is in wei (1 eth = 10^18 wei)
-  // planCost -> in wei
+  // currency input is in eth (1 eth = 10^18 wei)
+  // planCost -> in eth (in MATIC)
   // time input is in days
   // planStart -> After how many days from now you want this plan to activate for users to buy
   // planEnd -> After how many days after planStart you want this plan to deactivate disabling users to buy
@@ -80,7 +80,7 @@ contract Plan{
     planDetails storage newPlan = plans[newTokenId];
     newPlan.planId = newTokenId;
     newPlan.planName = _planName;
-    newPlan.planCost = _planCost;
+    newPlan.planCost = _planCost * 1 ether;
     newPlan.planStart = block.timestamp;
     newPlan.planDuration = _planDuration * 1 days;
     newPlan.planValidity = true;
@@ -97,7 +97,7 @@ contract Plan{
     planDetails storage newPlan = plans[newTokenId];
     newPlan.planId = newTokenId;
     newPlan.planName = _planName;
-    newPlan.planCost = _planCost;
+    newPlan.planCost = _planCost * 1 ether;
     newPlan.planStart = block.timestamp + _planStart * 1 days;
     newPlan.planDuration = _planDuration * 1 days;
     newPlan.planEnd = newPlan.planStart + _planEnd * 1 days;
@@ -119,7 +119,7 @@ contract Plan{
     require(Plan.planValidity == true, "Cannot Edit a Deleted Plan");
     require(_planEnd !=0, "_planEnd cannot be 0");
     Plan.planName = _planName;
-    Plan.planCost = _planCost;
+    Plan.planCost = _planCost * 1 ether;
     Plan.planDuration = _planDuration * 1 days;
     Plan.planStart = block.timestamp + _planStart * 1 days;
     Plan.planEnd = Plan.planStart + _planEnd * 1 days;
@@ -130,7 +130,7 @@ contract Plan{
     return plans[_planId];
   }
 
-  function ticketContract(address _ticketContractAddr) public {
+  function ticketContract(address _ticketContractAddr) onlyPlanController public {
     ticketContractAddr = _ticketContractAddr;
   }
 
