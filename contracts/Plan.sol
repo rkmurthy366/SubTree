@@ -131,7 +131,7 @@ contract Plan{
     emit editPlanEvent(_planId, _planName, _planCost, _planStart, _planDuration, _planEnd);
   }
 
-  function getPlanDetails(uint _planId) public view returns (planDetails memory) {
+  function getPlanDetails(uint _planId) public view returns (planDetails memory ) {
     return plans[_planId];
   }
 

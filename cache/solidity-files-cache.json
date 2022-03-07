@@ -550,8 +550,8 @@
       ]
     },
     "/home/enoch/gitWorkspace/coupon/frontend/contracts/Plan.sol": {
-      "lastModificationDate": 1646547856946,
-      "contentHash": "759fefb6ad28eb2541b5e3165e927c34",
+      "lastModificationDate": 1646590781650,
+      "contentHash": "281df7c051cc2808cc086420a2ff0b2a",
       "sourceName": "contracts/Plan.sol",
       "solcConfig": {
         "version": "0.8.10",
